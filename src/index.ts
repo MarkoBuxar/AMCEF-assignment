@@ -1,7 +1,10 @@
-#!/usr/bin/env node
-
+import express  from "express";
+import { Config } from "./Config/Config";
 import { Logger } from "./Logger/Logger";
-import { Utils } from "./Utils/Utils";
 
-Logger.Info("asd");
-Logger.Success(Utils.toJadenCase("this is a test sentence"));
+const port: Number = Config.Instance.Get("port");
+
+const app = express();
+
+
+app.listen(port, Logger.Info(`Server started at port ${port}`));

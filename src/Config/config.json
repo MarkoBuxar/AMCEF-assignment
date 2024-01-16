@@ -1,5 +1,6 @@
 {
   "log": {
     "level": ["ERR", "WARN", "INFO", "SUCC", "DEB"]
-  }
+  },
+  "port": 3000
 }
