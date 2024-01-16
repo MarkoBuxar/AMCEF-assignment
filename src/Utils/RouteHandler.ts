@@ -3,8 +3,15 @@
 import fs from 'fs';
 import Path from 'path';
 import { Logger } from '../Logger/Logger';
+import express, { Router } from "express";
+
+export const routes = express.Router();
+
+
 
 export class RouteHandler {
+  public static endpointCont = [];
+
   constructor() {}
 
   public async init(server) {
@@ -13,13 +20,20 @@ export class RouteHandler {
     const routeFiles = fs.readdirSync(routeDir).filter((file) => {
       return file.endsWith('.ts') || file.endsWith('.js');
     });
+    
 
     routeFiles.forEach(async (file) => {
       const im = await import(Path.join(routeDir, file));
+
       for (const key in im) {
         Logger.Info('adding ' + key + ' route');
-        await im[key](server);
+
+        const route = new im[key]();
+
+        await server.use(route.baseRoute, route.router);
+
       }
     });
   }
+
 }
