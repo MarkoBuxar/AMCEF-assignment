@@ -1,0 +1,29 @@
+{
+  "name": "ts-boilerplate",
+  "description": "typescript boilerplate",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "bin": {
+    "<BASH COMMAND>": "dist/index.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "build": "tsc -p .",
+    "global-install": "yarn build && yarn global add file:$PWD",
+    "global-reinstall": "yarn global remove <BASH COMMAND> && yarn global-install"
+  },
+  "devDependencies": {
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3",
+    "@types/node": "^13.11.0",
+    "@types/fs-extra": "^8.1.0",
+    "@types/chalk": "^2.2.0",
+    "@types/lodash": "^4.14.149"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "fs-extra": "^9.0.0",
+    "lodash": "^4.17.15"
+  }
+}
