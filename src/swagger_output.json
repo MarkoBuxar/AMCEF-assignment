@@ -27,6 +27,44 @@
             }
           }
         }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/testRequest"
+              },
+              "example": {
+                "message": "this is a message string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test2": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "a new test",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/testResponse"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
