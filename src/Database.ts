@@ -1,9 +1,14 @@
 import { Logger } from './Logger/Logger';
-import { Options, Sequelize } from 'sequelize';
+import { Model, Options, Sequelize } from 'sequelize';
 import { DBInitHandler } from './Utils/DBInitHandler';
+
+interface Endpoints {
+  [key: string]: any;
+}
 
 export class Database {
   public conn;
+  public endpoints: Endpoints = {};
   private static _instance: Database;
 
   constructor() {
@@ -33,7 +38,7 @@ export class Database {
       await this.conn.authenticate();
       Logger.Info('DB initiated');
 
-      await new DBInitHandler().init(this.conn);
+      await new DBInitHandler().init(this);
     } catch (error) {
       Logger.Error('Unable to connect to the database:', error);
     }

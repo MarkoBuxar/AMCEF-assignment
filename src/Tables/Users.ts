@@ -1,11 +1,11 @@
 import { DataTypes } from 'sequelize';
 import { TableBuilder } from '../BaseClasses/TableClass';
 
-export class User extends TableBuilder {
+export class Users extends TableBuilder {
   public static order = 0;
-  constructor(database, ref) {
-    super(database, ref);
-    this.name = 'User';
+  constructor(database) {
+    super(database);
+    this.name = 'users';
   }
 
   public override build = async function () {
@@ -16,13 +16,13 @@ export class User extends TableBuilder {
         primaryKey: true,
       },
 
-      // Model attributes are defined here
       username: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
+        unique: true,
       },
       password: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
         // allowNull defaults to true
       },

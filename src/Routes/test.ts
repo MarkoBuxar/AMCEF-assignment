@@ -19,6 +19,8 @@ export class test {
     this.router = Router();
 
     this.router.get('/test', (req, res) => {
+      // #swagger.tags = ['test']
+
       /* #swagger.responses[200] = {
                     description: "Some description...",
                     content: {
@@ -35,6 +37,8 @@ export class test {
     });
 
     this.router.get('/test2', (req, res) => {
+      // #swagger.tags = ['test']
+
       /* #swagger.responses[200] = {
                         description: "a new test",
                         content: {
@@ -50,6 +54,8 @@ export class test {
     });
 
     this.router.post('/test', (req, res) => {
+      // #swagger.tags = ['test']
+
       /* #swagger.requestBody = {
             required: false,
             content: {

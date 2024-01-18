@@ -3,6 +3,7 @@ import Path from 'path';
 import express, { Router } from 'express';
 import { Logger } from '../Logger/Logger';
 import { Model } from 'sequelize';
+import { Database } from '../Database';
 
 export type Reference = {
   ref: Model;
@@ -12,7 +13,6 @@ export const routes = express.Router();
 
 export class DBInitHandler {
   private operationQueue = [];
-  private tableRef = [];
 
   constructor() {}
 
@@ -44,16 +44,16 @@ export class DBInitHandler {
 
     await Promise.all(
       this.operationQueue.map(async (operation) => {
-        const tb = new operation.tableBuilder(database, this.tableRef);
+        const tb = new operation.tableBuilder(database);
         const table = await tb.build();
-        if (!table) return;
+
         Logger.Info('adding ' + tb.name + ' table');
 
         await table.sync();
-        this.tableRef[operation.tableBuilder.name] = table;
+        database.endpoints[tb.name] = table;
       }),
     );
 
-    await database.sync({ force: true });
+    await database.conn.sync();
   }
 }

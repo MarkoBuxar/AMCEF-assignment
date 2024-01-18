@@ -6,9 +6,8 @@ export abstract class TableBuilder {
   public ref: Reference[];
   public static order: number;
 
-  constructor(database, ref) {
-    this.db = database;
-    this.ref = ref;
+  constructor(database) {
+    this.db = database.conn;
   }
 
   public async build() {
