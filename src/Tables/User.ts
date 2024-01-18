@@ -1,9 +1,15 @@
 import { DataTypes } from 'sequelize';
+import { TableBuilder } from '../BaseClasses/TableClass';
 
-export function Users(database) {
-  const User = database.define(
-    'User',
-    {
+export class User extends TableBuilder {
+  public static order = 0;
+  constructor(database, ref) {
+    super(database, ref);
+    this.name = 'User';
+  }
+
+  public override build = async function () {
+    const User = await this.db.define(this.name, {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -20,9 +26,8 @@ export function Users(database) {
         allowNull: false,
         // allowNull defaults to true
       },
-    },
-    {
-      // Other model options go here
-    },
-  );
+    });
+
+    return User;
+  };
 }
