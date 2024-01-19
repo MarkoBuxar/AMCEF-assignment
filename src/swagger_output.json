@@ -53,6 +53,42 @@
         }
       }
     },
+    "/user/{username}": {
+      "get": {
+        "tags": [
+          "User Managment"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a specific user and their lists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/userResponse"
+                },
+                "example": {
+                  "username": "JonDoe"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": [
@@ -204,6 +240,20 @@
           }
         }
       },
+      "userResponse": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          }
+        }
+      },
       "userResponseArray": {
         "type": "object",
         "properties": {
@@ -215,40 +265,7 @@
                 "example": "array"
               },
               "items": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "object"
-                  },
-                  "properties": {
-                    "type": "object",
-                    "properties": {
-                      "username": {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "example": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "required": {
-                    "type": "array",
-                    "example": [
-                      "username"
-                    ],
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "additionalProperties": {
-                    "type": "boolean",
-                    "example": false
-                  }
-                }
+                "$ref": "#/components/schemas/userResponse"
               }
             }
           }

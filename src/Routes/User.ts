@@ -1,45 +1,43 @@
 import { Router } from 'express';
 import { Database } from '../Database';
-import { userResponse } from './User';
 
-export type userResponseArray = {
-  users: userResponse[];
+export type userResponse = {
+  username: string;
 };
 
-export class Users {
+export class User {
   public baseRoute: string;
   public router: Router;
-  public static schemas: string[] = ['userResponseArray'];
+  public static schemas: string[] = ['userResponse'];
 
   constructor() {
     this.baseRoute = '/';
     this.router = Router();
 
-    this.router.get('/users', async (req, res) => {
+    this.router.get('/user/:username', async (req, res) => {
       // #swagger.tags = ['User Managment']
 
-      // schema should be array of objects. dunno how to do that properly yet so Im gonna spend my time elsewhere
-
       /* #swagger.responses[200] = {
-                description: "Returns all users and their lists",
+                description: "Returns a specific user and their lists",
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#components/schemas/userResponseArray"
+                            $ref: "#components/schemas/userResponse"
                         },
-                        example: [{ 
+                        example: { 
                             username: "JonDoe"
-                        }]
+                        }
                     }           
                 }
             }  
         */
 
       try {
-        const users = await Database.Instance.endpoints['users'].findAll({
+        const user = await Database.Instance.endpoints['users'].findAll({
+          where: { username: req.params.username },
           attributes: ['username'],
         });
-        res.status(200).send(users);
+        res.status(200).send(user);
       } catch (error) {
         res.status(400).send(error);
       }
